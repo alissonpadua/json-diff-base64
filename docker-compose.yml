@@ -1,0 +1,62 @@
+version: "3"
+
+networks:
+  jsondiffnet:
+    driver: bridge
+
+services:
+  nginx:
+    image: nginx:stable-alpine
+    container_name: nginx
+    depends_on:
+      - php
+      - db
+    ports:
+      - "8080:80"
+    volumes:
+      - "./:/var/www/html"
+      - "./.data/nginx/default.conf:/etc/nginx/conf.d/default.conf"
+    networks:
+      - jsondiffnet
+
+  php:
+    build:
+      context: ./.data/php
+      dockerfile: Dockerfile
+    container_name: php
+    volumes:
+      - ./:/var/www/html
+    ports:
+      - "9000:9000"
+    networks:
+      - jsondiffnet
+
+  db:
+    image: mysql:5.7.22
+    container_name: db
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./.data/dbdata:/var/lib/mysql
+    environment:
+      MYSQL_DATABASE: jsondiffbase64
+      MYSQL_USER: jsondiffbase64
+      MYSQL_PASSWORD: jsondiffbase64
+      MYSQL_ROOT_PASSWORD: jsondiffbase64
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mysql
+    networks:
+      - jsondiffnet
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    links:
+      - db
+    ports:
+      - 8090:80
+    environment:
+      - PMA_ARBITRARY=1
+    networks:
+      - jsondiffnet
