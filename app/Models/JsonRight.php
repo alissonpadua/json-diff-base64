@@ -5,17 +5,18 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class JsonLeft extends Model
+class JsonRight extends Model
 {
     use HasFactory;
 
     protected $fillable = [
+        'json_left_id',
         'code',
-        'json_base64'
+        'json_base64',
     ];
 
-    public function jsonRight()
+    public function jsonLeft()
     {
-        return $this->hasOne(JsonRight::class);
+        return $this->belongsTo(JsonLeft::class);
     }
 }

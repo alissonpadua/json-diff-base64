@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use App\Rules\ValidBase64String;
 
-class JsonLeftRequest extends FormRequest
+class JsonRightRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,7 +25,7 @@ class JsonLeftRequest extends FormRequest
     public function rules()
     {
         return [
-            'id' => 'required|integer|unique:json_lefts,code',
+            'id' => 'required|integer|unique:json_rights,code|exists:json_lefts,code',
             'json_base64' => [
                 'required',
                 'string',
@@ -39,5 +39,12 @@ class JsonLeftRequest extends FormRequest
         $this->merge([
             'id' => $this->id,
         ]);
+    }
+
+    public function messages()
+    {
+        return [
+            'id.exists' => 'Json Left not found'
+        ];
     }
 }
