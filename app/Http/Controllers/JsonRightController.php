@@ -10,6 +10,10 @@ class JsonRightController extends Controller
 {
     public function store(JsonRightRequest $request)
     {
+        /* 
+         TO ADD A NEW JSON RIGHT A JSON LEFT IS REQUIRED AND
+         MUST HAVE A RELATIONSHIP BETWEEN THEN
+        */
         $jsonLeft = JsonLeft::where('code', $request->id)->first();
 
         return $jsonLeft->jsonRight()->create([
