@@ -64,6 +64,7 @@ Create a webservice that provide a service to compare two base64 encoded JSONs.
  - Git / Github
  - Docker
  - Insomnia
+ - VSCode
  - Laravel Framework 8.12
  - MySQL
  - API Layer
