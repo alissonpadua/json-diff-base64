@@ -12,12 +12,6 @@ class JsonRightController extends Controller
     {
         $jsonLeft = JsonLeft::where('code', $request->id)->first();
 
-        if (!$jsonLeft) {
-            throw ValidationException::withMessages([
-                'json_left' => 'Json Left not found'
-            ]);
-        }
-
         return $jsonLeft->jsonRight()->create([
             'code' => $request->id,
             'json_base64' => $request->json_base64

@@ -25,7 +25,7 @@ class JsonRightRequest extends FormRequest
     public function rules()
     {
         return [
-            'id' => 'required|integer|unique:json_rights,code|exists:json_lefts,code',
+            'id' => 'integer|unique:json_rights,code|exists:json_lefts,code',
             'json_base64' => [
                 'required',
                 'string',
